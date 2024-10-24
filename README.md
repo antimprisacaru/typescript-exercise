@@ -1,101 +1,81 @@
-# TypescriptExercise
+## Overview of the Recruitment Exercise
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+This is a dummy project, which is used to demonstrate knowledge of node and Angular as well as development in general. It serves as an example with some bad practices included.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+### Technologies:
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- Backend: Node.js
+- Frontend: Angular
+- API: REST with an openapi.yaml file
 
-## Run tasks
+**Duration: 5-8 hours**
 
-To run the dev server for your app, use:
+## Exercise Structure
 
-```sh
-npx nx serve frontend
-```
+### Repository Structure:
 
-To create a production bundle:
+`/backend` - Should contain all backend-related files.
 
-```sh
-npx nx build frontend
-```
+`/frontend` - Contains all frontend-related files.
 
-To see all available targets to run for a project, run:
+`/docs` - Contains the openapi.yaml file and any additional documentation.
 
-```sh
-npx nx show project frontend
-```
+#### Backend (/backend):
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+index.ts - Should contain main server file using Node.js.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+#### Frontend (/frontend):
 
-## Add new projects
+app.component.ts - Main application file for Angular.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+##### API Definition (/docs):
 
-Use the plugin's generator to create new projects.
+openapi.yaml
 
-To generate a new application, use:
+## Tasks:
 
-```sh
-npx nx g @nx/angular:app demo
-```
+### Backend:
 
-To generate a new library, use:
+- [ ] Implement the backend architecture from scratch, which will support the Angular application's API calls.
+- [ ] Implement error handling.
+- [ ] Implement the plugin system for extensibility (Chatbot).
+- [ ] Add authentication for message sending.
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+### Frontend:
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+- [ ] Optimize data bindings and state management.
+- [ ] Improve the user interface responsiveness.
+- [ ] Implement a feature to display message status (sent, received).
+- [ ] Add seamless communication with the backend application.
+- [ ] Create a login form to allow users to log in and send messages.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### API:
 
-## Set up CI!
+- [ ] Review and if necessary correct RESTful API practices.
+- [ ] Ensure best practices in the API definition.
 
-### Step 1
+## General instructions
 
-To connect to Nx Cloud, run the following command:
+- Make sure to follow best practices.
+- Pay attention to the code quality as well as software architecture. We value maintainability and readability.
+- We recommend documenting your changes and the reasoning behind them.
+- Git history is important. Make sure to commit your changes as you progress.
+- Feel free to ask questions if you have any doubts.
+- We are looking for a clean, well-structured solution that demonstrates your understanding of the technologies used.
 
-```sh
-npx nx connect
-```
+## Deliverables
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+- [ ] send in files with your comments by (one of)
+  - Inline-Code-Comments and send us the files
+  - drop the files anywhere and send us the link
+  - upload the code to your own Repository (Avoid forking the repository and creating a PR, as this would make your solution visible to others)
+- [ ] A brief report summarizing the changes you made, why, and any additional recommendations if they had more time.
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Run instructions
 
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
-```
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Backend: `cd backend && npm install && npm run build && npm run start`
+- Frontend: `cd frontend && npm install && npm run serve`
+- API: `openapi.yaml` file contains the API definition.
+- Access the frontend at `http://localhost:4200`.
+- Access the backend at `http://localhost:3000`.
+- Note: The project is set up to run on localhost by default.

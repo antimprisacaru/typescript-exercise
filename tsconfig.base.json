@@ -14,7 +14,20 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@typescript-exercise/core/*": [
+        "libs/frontend/core/src/lib/*"
+      ],
+      "@typescript-exercise/data-access/*": [
+        "libs/frontend/data-access/src/lib/*"
+      ],
+      "@typescript-exercise/features/auth": [
+        "libs/frontend/features/auth/src/index.ts"
+      ],
+      "@typescript-exercise/features/chat": [
+        "libs/frontend/features/chat/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
