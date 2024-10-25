@@ -52,7 +52,7 @@ async function bootstrap() {
 
   // Global error handling
   const httpAdapter = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new GlobalErrorFilter(httpAdapter));
+  app.useGlobalFilters(new GlobalErrorFilter(httpAdapter, configService));
 
   await app.listen(configService.port);
 

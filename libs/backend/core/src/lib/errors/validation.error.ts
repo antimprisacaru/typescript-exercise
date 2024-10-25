@@ -8,7 +8,7 @@ export interface ValidationErrorDetail {
 }
 
 export class ValidationError extends AppError {
-  constructor(code: string, details: ValidationErrorDetail[], metadata?: Record<string, any>) {
+  constructor(code: string, details: ValidationErrorDetail[], metadata?: Record<string, unknown>) {
     super(code, 'Validation failed', 400, {
       ...metadata,
       details,

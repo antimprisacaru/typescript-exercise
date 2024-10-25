@@ -1,1 +1,1 @@
-export * from './lib/backend-features-chat.module';
+export * from './lib/chat.module';

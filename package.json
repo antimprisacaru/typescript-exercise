@@ -115,14 +115,6 @@
     ]
   },
   "lint-staged": {
-    "{frontend,backend,libs}/**/*.{js,ts,html,scss,css}": [
-      "prettier --write"
-    ],
-    "{frontend,backend,libs}/**/*.ts": [
-      "nx affected:lint --files"
-    ],
-    "{frontend,backend,libs}/**/*.html": [
-      "nx affected:lint --files"
-    ]
+    "{frontend,backend,libs}/**/*.{js,ts,html,scss,css}": "prettier --write"
   }
 }

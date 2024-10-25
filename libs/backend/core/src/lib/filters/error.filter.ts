@@ -3,6 +3,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { Response } from 'express';
 import { AppError } from '../errors/base.error';
 import { ZodError } from 'zod';
+import { EnvironmentConfigService } from '@typescript-exercise/backend/core/config/env.config';
 
 interface ErrorResponse {
   code: string;
@@ -17,7 +18,7 @@ interface ErrorResponse {
 export class GlobalErrorFilter implements ExceptionFilter {
   private readonly logger = new Logger(GlobalErrorFilter.name);
 
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+  constructor(private readonly httpAdapterHost: HttpAdapterHost, private readonly config: EnvironmentConfigService) {}
 
   catch(error: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;
@@ -33,7 +34,7 @@ export class GlobalErrorFilter implements ExceptionFilter {
     httpAdapter.reply(response, errorResponse, errorResponse.statusCode);
   }
 
-  private createErrorResponse(error: unknown, request: any): ErrorResponse {
+  private createErrorResponse<T extends { url: string }>(error: unknown, request: T): ErrorResponse {
     const baseResponse = {
       timestamp: new Date().toISOString(),
       path: request.url,
@@ -81,14 +82,13 @@ export class GlobalErrorFilter implements ExceptionFilter {
       code: 'INTERNAL_SERVER_ERROR',
       message: 'Internal server error',
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      metadata:
-        process.env['NODE_ENV'] === 'development'
-          ? {
-              name: unknownError.name,
-              message: unknownError.message,
-              stack: unknownError.stack,
-            }
-          : undefined,
+      metadata: this.config.isDevelopment
+        ? {
+            name: unknownError.name,
+            message: unknownError.message,
+            stack: unknownError.stack,
+          }
+        : undefined,
       ...baseResponse,
     };
   }

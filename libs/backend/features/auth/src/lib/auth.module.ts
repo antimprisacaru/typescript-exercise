@@ -1,7 +1,6 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { ConfigModule } from '@nestjs/config';
-import { middleware } from 'supertokens-node/framework/express';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
 import { DataAccessModule } from '@typescript-exercise/backend/data-access/data-access.module';
@@ -11,8 +10,4 @@ import { DataAccessModule } from '@typescript-exercise/backend/data-access/data-
   controllers: [AuthController],
   providers: [AuthService],
 })
-export class AuthModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(middleware()).forRoutes('*');
-  }
-}
+export class AuthModule {}

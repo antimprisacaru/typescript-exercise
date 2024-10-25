@@ -15,14 +15,18 @@ export const nameSchema = z
   .max(50, 'Name is too long')
   .regex(/^[a-zA-Z\s-']+$/, 'Name contains invalid characters');
 
-export const signUpSchema = z.object({
-  email: emailSchema,
-  password: passwordSchema,
-  firstName: nameSchema,
-  lastName: nameSchema,
-}); // satisfies z.ZodType<SignUpRequestDto>;
+export const signUpSchema = z
+  .object({
+    email: emailSchema,
+    password: passwordSchema,
+    firstName: nameSchema,
+    lastName: nameSchema,
+  })
+  .strict();
 
-export const signInSchema = z.object({
-  email: emailSchema,
-  password: z.string().min(1, 'Password is required'),
-}); // satisfies z.ZodType<SignInRequestDto>;
+export const signInSchema = z
+  .object({
+    email: emailSchema,
+    password: z.string().min(1, 'Password is required'),
+  })
+  .strict();

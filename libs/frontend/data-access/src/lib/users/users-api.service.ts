@@ -15,6 +15,6 @@ export class UsersApiService {
   }
 
   login(input: UserLoginDto): Observable<void> {
-    return this.http.post<void>(`${this.API_URL}/${UsersApiRoutes.postLogin()}`, input);
+    return this.http.post<void>(`${this.API_URL}/${UsersApiRoutes.postSignIn()}`, input);
   }
 }
