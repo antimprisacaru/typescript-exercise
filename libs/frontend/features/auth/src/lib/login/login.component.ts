@@ -6,7 +6,7 @@ import { PasswordModule } from 'primeng/password';
 import { initLoginForm } from './login.form';
 import { InputTextModule } from 'primeng/inputtext';
 import { catchError, filter, map, of, startWith, Subject, switchMap, tap } from 'rxjs';
-import { UserService } from '@typescript-exercise/core/services/user.service';
+import { UserService } from '@typescript-exercise/frontend/core/services/user.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 

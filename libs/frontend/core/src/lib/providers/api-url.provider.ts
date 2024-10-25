@@ -1,5 +1,5 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { API_URL_TOKEN } from '@typescript-exercise/data-access/tokens/api-url.token';
+import { API_URL_TOKEN } from '@typescript-exercise/frontend/data-access/tokens/api-url.token';
 
 export function provideApiUrl(): EnvironmentProviders {
   return makeEnvironmentProviders([

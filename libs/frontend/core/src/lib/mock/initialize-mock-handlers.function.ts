@@ -1,9 +1,9 @@
 import { EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { RequestHandler } from 'msw';
 import { flatMap } from 'lodash';
-import { messageMocks } from '@typescript-exercise/data-access/messages/messages-api.mock-handler';
-import { conversationsMocks } from '@typescript-exercise/data-access/conversations/conversations-api.mock-handler';
-import { usersMocks } from '@typescript-exercise/data-access/users/users-api.mock-handler';
+import { messageMocks } from '@typescript-exercise/frontend/data-access/messages/messages-api.mock-handler';
+import { conversationsMocks } from '@typescript-exercise/frontend/data-access/conversations/conversations-api.mock-handler';
+import { usersMocks } from '@typescript-exercise/frontend/data-access/users/users-api.mock-handler';
 
 const mockHandlers = [usersMocks, conversationsMocks, messageMocks];
 

@@ -15,16 +15,28 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@typescript-exercise/core/*": [
+      "@typescript-exercise/backend/core/*": [
+        "libs/backend/core/src/lib/*"
+      ],
+      "@typescript-exercise/backend/data-access/*": [
+        "libs/backend/data-access/src/lib/*"
+      ],
+      "@typescript-exercise/backend/features/auth": [
+        "libs/backend/features/auth/src/index.ts"
+      ],
+      "@typescript-exercise/backend/features/chat": [
+        "libs/backend/features/chat/src/index.ts"
+      ],
+      "@typescript-exercise/frontend/core/*": [
         "libs/frontend/core/src/lib/*"
       ],
-      "@typescript-exercise/data-access/*": [
+      "@typescript-exercise/frontend/data-access/*": [
         "libs/frontend/data-access/src/lib/*"
       ],
-      "@typescript-exercise/features/auth": [
+      "@typescript-exercise/frontend/features/auth": [
         "libs/frontend/features/auth/src/index.ts"
       ],
-      "@typescript-exercise/features/chat": [
+      "@typescript-exercise/frontend/features/chat": [
         "libs/frontend/features/chat/src/index.ts"
       ]
     }

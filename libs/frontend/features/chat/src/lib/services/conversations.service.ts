@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ConversationsApiService } from '@typescript-exercise/data-access/conversations/conversations-api.service';
+import { ConversationsApiService } from '@typescript-exercise/frontend/data-access/conversations/conversations-api.service';
 import { ConversationModel } from '../models/conversation.model';
 import { map, Observable } from 'rxjs';
 

@@ -1,4 +1,4 @@
-import { UserDto } from '@typescript-exercise/data-access/users/users-api.interfaces';
+import { UserDto } from '@typescript-exercise/frontend/data-access/users/users-api.interfaces';
 
 export class UserModel {
   id: string;

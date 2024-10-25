@@ -8,7 +8,7 @@ import { catchError, filter, map, Observable, of, pipe, startWith, Subject, swit
 import { MessageModel } from '../../models/message.model';
 import { ChatSkeletonComponent } from '../message/message-skeleton.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { UserService } from '@typescript-exercise/core/services/user.service';
+import { UserService } from '@typescript-exercise/frontend/core/services/user.service';
 import { AvatarModule } from 'primeng/avatar';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';

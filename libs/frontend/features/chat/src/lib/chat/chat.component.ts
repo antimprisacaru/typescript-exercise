@@ -8,7 +8,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { PrimeTemplate } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ResponsiveService } from '@typescript-exercise/core/services/responsive.service';
+import { ResponsiveService } from '@typescript-exercise/frontend/core/services/responsive.service';
 import { DividerModule } from 'primeng/divider';
 
 @Component({

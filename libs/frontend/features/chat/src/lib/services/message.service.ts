@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { MessageModel } from '../models/message.model';
-import { MessagesApiService } from '@typescript-exercise/data-access/messages/messages-api.service';
+import { MessagesApiService } from '@typescript-exercise/frontend/data-access/messages/messages-api.service';
 import { map, Observable } from 'rxjs';
-import { MessageInputDto } from '@typescript-exercise/data-access/messages/messages-api.interfaces';
+import { MessageInputDto } from '@typescript-exercise/frontend/data-access/messages/messages-api.interfaces';
 
 @Injectable()
 export class MessageService {

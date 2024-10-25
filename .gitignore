@@ -34,6 +34,15 @@ yarn-error.log
 testem.log
 /typings
 
+# Environment files
+.env
+.env.*
+libs/backend/core/src/lib/config/env/*.env
+
+# But keep the example files
+!.env.example
+!libs/backend/core/src/lib/config/env/*.env.example
+
 # System Files
 .DS_Store
 Thumbs.db

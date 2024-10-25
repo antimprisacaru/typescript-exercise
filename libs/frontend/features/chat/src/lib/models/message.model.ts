@@ -1,5 +1,5 @@
-import { MessageDto, MessageStatus } from '@typescript-exercise/data-access/messages/messages-api.interfaces';
-import { UserModel } from '@typescript-exercise/core/models/user.model';
+import { MessageDto, MessageStatus } from '@typescript-exercise/frontend/data-access/messages/messages-api.interfaces';
+import { UserModel } from '@typescript-exercise/frontend/core/models/user.model';
 
 export class MessageModel {
   id: string;

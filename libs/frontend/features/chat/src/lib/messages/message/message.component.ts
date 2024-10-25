@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
-import { UserService } from '@typescript-exercise/core/services/user.service';
+import { UserService } from '@typescript-exercise/frontend/core/services/user.service';
 import { MessageModel } from '../../models/message.model';
 
 @Component({

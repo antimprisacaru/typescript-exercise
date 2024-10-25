@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
-import { UsersApiService } from '@typescript-exercise/data-access/users/users-api.service';
+import { UsersApiService } from '@typescript-exercise/frontend/data-access/users/users-api.service';
 import { UserModel } from '../models/user.model';
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
-import { UserLoginDto } from '@typescript-exercise/data-access/users/users-api.interfaces';
+import { UserLoginDto } from '@typescript-exercise/frontend/data-access/users/users-api.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

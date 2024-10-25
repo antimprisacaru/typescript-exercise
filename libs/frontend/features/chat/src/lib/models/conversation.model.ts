@@ -1,5 +1,5 @@
-import { ConversationDto } from '@typescript-exercise/data-access/conversations/conversations-api.interfaces';
-import { UserModel } from '@typescript-exercise/core/models/user.model';
+import { ConversationDto } from '@typescript-exercise/frontend/data-access/conversations/conversations-api.interfaces';
+import { UserModel } from '@typescript-exercise/frontend/core/models/user.model';
 
 export class ConversationModel {
   id: string;

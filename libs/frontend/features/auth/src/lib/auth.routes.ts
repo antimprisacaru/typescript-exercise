@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { loginCanMatchGuard } from '@typescript-exercise/core/guards/login.guard';
+import { loginCanMatchGuard } from '@typescript-exercise/frontend/core/guards/login.guard';
 
 export const routes: Route[] = [
   {
