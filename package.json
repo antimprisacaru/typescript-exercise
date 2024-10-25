@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "setup": "ts-node scripts/setup-env.ts",
+    "postinstall": "npm run setup",
+    "prepare": "husky install",
     "serve:frontend": "nx serve frontend",
     "serve:backend": "dotenv -e libs/backend/core/src/lib/config/env/development.env -- nx serve backend",
     "serve:docker": "docker-compose -f ./docker/docker-compose.yml --env-file libs/backend/core/src/lib/config/env/development.env up",
@@ -10,9 +13,7 @@
     "prisma:generate": "prisma generate --schema libs/backend/data-access/src/lib/prisma/schema.prisma",
     "prisma:migrate": "dotenv -e libs/backend/core/src/lib/config/env/development.env -- prisma migrate dev --schema libs/backend/data-access/src/lib/prisma/schema.prisma",
     "prisma:deploy": "dotenv -e libs/backend/core/src/lib/config/env/development.env -- prisma migrate deploy --schema libs/backend/data-access/src/lib/prisma/schema.prisma",
-    "prisma:studio": "dotenv -e libs/backend/core/src/lib/config/env/development.env -- prisma studio --schema libs/backend/data-access/src/lib/prisma/schema.prisma",
-    "setup": "ts-node scripts/setup-env.ts",
-    "postinstall": "npm run setup"
+    "prisma:studio": "dotenv -e libs/backend/core/src/lib/config/env/development.env -- prisma studio --schema libs/backend/data-access/src/lib/prisma/schema.prisma"
   },
   "private": true,
   "dependencies": {
@@ -90,10 +91,12 @@
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-playwright": "^1.6.2",
+    "husky": "^8.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "jest-preset-angular": "~14.1.0",
+    "lint-staged": "^15.2.10",
     "nx": "20.0.3",
     "postcss": "^8.4.47",
     "prettier": "^2.6.2",
@@ -109,6 +112,17 @@
   "msw": {
     "workerDirectory": [
       "frontend/src"
+    ]
+  },
+  "lint-staged": {
+    "{frontend,backend,libs}/**/*.{js,ts,html,scss,css}": [
+      "prettier --write"
+    ],
+    "{frontend,backend,libs}/**/*.ts": [
+      "nx affected:lint --files"
+    ],
+    "{frontend,backend,libs}/**/*.html": [
+      "nx affected:lint --files"
     ]
   }
 }
