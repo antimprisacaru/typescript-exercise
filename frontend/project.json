@@ -22,11 +22,7 @@
           },
           "frontend/src/mockServiceWorker.js"
         ],
-        "styles": [
-          "primeng/resources/themes/lara-light-indigo/theme.css",
-          "node_modules/primeng/resources/primeng.min.css",
-          "frontend/src/styles.scss"
-        ],
+        "styles": ["frontend/src/styles.scss"],
         "scripts": []
       },
       "configurations": {

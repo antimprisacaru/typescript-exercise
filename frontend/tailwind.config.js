@@ -8,6 +8,10 @@ module.exports = {
     join(__dirname, 'libs/frontend/features/!(*.stories|*.spec).{ts,html}'), // Add this line
     ...createGlobPatternsForDependencies(__dirname),
   ],
+  important: false,
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {},
   },

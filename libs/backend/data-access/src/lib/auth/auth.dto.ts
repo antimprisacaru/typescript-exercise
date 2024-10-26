@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class SignUpRequestDto {
+export class RegisterRequestDto {
   @ApiProperty({
     example: 'john.doe@example.com',
     description: 'User email address',
@@ -31,7 +31,7 @@ export class SignUpRequestDto {
   lastName!: string;
 }
 
-export class SignInRequestDto {
+export class LoginRequestDto {
   @ApiProperty({
     example: 'john.doe@example.com',
     description: 'User email address',

@@ -2,13 +2,12 @@ import { APP_INITIALIZER, EnvironmentInjector, EnvironmentProviders, makeEnviron
 import { UserService } from '../services/user.service';
 import { firstValueFrom, map, take } from 'rxjs';
 import { initMockHandlers } from '../mock/initialize-mock-handlers.function';
-import { setupWorker } from 'msw/browser';
 
 function bootstrapFn(injector: EnvironmentInjector, userService: UserService): () => Promise<void> {
   return async (): Promise<void> => {
     const initializedHandlers = initMockHandlers(injector);
-    const worker = setupWorker(...initializedHandlers);
-    await worker.start({ onUnhandledRequest: 'bypass' });
+    // const worker = setupWorker(...initializedHandlers);
+    // await worker.start({ onUnhandledRequest: 'bypass' });
     return firstValueFrom(
       userService.getCurrentUser().pipe(
         take(1),

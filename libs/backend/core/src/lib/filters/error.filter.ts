@@ -1,9 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Response } from 'express';
-import { AppError } from '../errors/base.error';
+import { AppError } from '@typescript-exercise/backend/data-access/common/errors/base.error';
 import { ZodError } from 'zod';
-import { EnvironmentConfigService } from '@typescript-exercise/backend/core/config/env.config';
+import { EnvironmentConfigService } from '../config/env.config';
+import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
 
 interface ErrorResponse {
   code: string;
@@ -16,9 +17,11 @@ interface ErrorResponse {
 
 @Catch()
 export class GlobalErrorFilter implements ExceptionFilter {
-  private readonly logger = new Logger(GlobalErrorFilter.name);
-
-  constructor(private readonly httpAdapterHost: HttpAdapterHost, private readonly config: EnvironmentConfigService) {}
+  constructor(
+    @OgmaLogger(GlobalErrorFilter) private readonly logger: OgmaService,
+    private readonly httpAdapterHost: HttpAdapterHost,
+    private readonly config: EnvironmentConfigService
+  ) {}
 
   catch(error: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;

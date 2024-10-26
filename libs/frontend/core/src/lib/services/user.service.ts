@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { UsersApiService } from '@typescript-exercise/frontend/data-access/users/users-api.service';
 import { UserModel } from '../models/user.model';
-import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
-import { UserLoginDto } from '@typescript-exercise/frontend/data-access/users/users-api.interfaces';
+import { catchError, map, Observable, of } from 'rxjs';
+import { UserDto, UserLoginDto, UserRegisterDto } from '@typescript-exercise/frontend/data-access/users/users-api.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -13,16 +13,22 @@ export class UserService {
 
   getCurrentUser(): Observable<UserModel | undefined> {
     return this.api.getCurrentUser().pipe(
-      map((result) => new UserModel(result)),
-      catchError(() => of(undefined)),
-      tap((user: UserModel | undefined) => {
-        this._currentUser.set(user);
-      })
+      map((result) => this.setCurrentUser(result)),
+      catchError(() => of(undefined))
     );
   }
 
   login(input: UserLoginDto): Observable<UserModel> {
-    // TODO: save token in local storage
-    return this.api.login(input).pipe(switchMap(() => this.api.getCurrentUser()));
+    return this.api.login(input).pipe(map((result) => this.setCurrentUser(result)));
+  }
+
+  register(input: UserRegisterDto): Observable<void> {
+    return this.api.register(input);
+  }
+
+  private setCurrentUser(result: UserDto): UserModel {
+    const user = new UserModel(result);
+    this._currentUser.set(user);
+    return user;
   }
 }

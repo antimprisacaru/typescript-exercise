@@ -4,7 +4,7 @@ import { ConfigModule } from '@typescript-exercise/backend/core/config/config.mo
 import { AuthModule } from '@typescript-exercise/backend/features/auth';
 
 @Module({
-  imports: [ConfigModule, AuthModule],
+  imports: [ConfigModule, AuthModule.forRoot()],
   controllers: [],
   providers: [],
 })

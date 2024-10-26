@@ -2,33 +2,22 @@ import { Body, Controller, Get, HttpStatus, Post, Req, Res, UnauthorizedExceptio
 import { AuthGuard } from '@typescript-exercise/backend/core/guards/auth.guard';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
-import {
-  AuthResponseDto,
-  SignInRequestDto,
-  SignUpRequestDto,
-} from '@typescript-exercise/backend/data-access/auth/auth.dto';
+import { AuthResponseDto, LoginRequestDto, RegisterRequestDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
 import { SessionContainer } from 'supertokens-node/recipe/session';
 import { UserRepository } from '@typescript-exercise/backend/data-access/user/user.repository';
 import { GetSession } from '@typescript-exercise/backend/core/decorators/session.decorator';
 import { ValidationPipe } from '@typescript-exercise/backend/core/pipes/validation.pipe';
 import { signInSchema, signUpSchema } from '@typescript-exercise/backend/data-access/auth/auth.schema';
 import { AuthErrorCode } from '@typescript-exercise/backend/data-access/auth/auth.errors';
-import {
-  ApiBadRequestResponse,
-  ApiBody,
-  ApiConflictResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiConflictResponse, ApiOperation, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, protected readonly userRepository: UserRepository) {}
 
-  @Post('signup')
+  @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
-  @ApiBody({ type: SignUpRequestDto })
+  @ApiBody({ type: RegisterRequestDto })
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'User successfully registered',
@@ -40,18 +29,18 @@ export class AuthController {
   @ApiConflictResponse({
     description: 'Email already exists',
   })
-  async signUp(
+  async register(
     @Body(new ValidationPipe(signUpSchema, AuthErrorCode.INVALID_INPUT))
-    dto: SignUpRequestDto,
+    dto: RegisterRequestDto,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ): Promise<AuthResponseDto> {
-    return this.authService.signUp(req, res, dto);
+    return this.authService.register(req, res, dto);
   }
 
-  @Post('signin')
+  @Post('login')
   @ApiOperation({ summary: 'Authenticate user' })
-  @ApiBody({ type: SignInRequestDto })
+  @ApiBody({ type: LoginRequestDto })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully authenticated',
@@ -63,13 +52,13 @@ export class AuthController {
   @ApiUnauthorizedResponse({
     description: 'Invalid credentials',
   })
-  async signIn(
+  async login(
     @Body(new ValidationPipe(signInSchema, AuthErrorCode.INVALID_INPUT))
-    dto: SignInRequestDto,
+    dto: LoginRequestDto,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
   ): Promise<AuthResponseDto> {
-    return this.authService.signIn(req, res, dto);
+    return this.authService.login(req, res, dto);
   }
 
   @Post('logout')

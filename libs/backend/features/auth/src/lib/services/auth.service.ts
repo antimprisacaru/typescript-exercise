@@ -4,27 +4,32 @@ import EmailPassword from 'supertokens-node/recipe/emailpassword';
 import Session, { SessionContainer } from 'supertokens-node/recipe/session';
 import { Request, Response } from 'express';
 import {
+  AuthErrorCode,
   EmailExistsError,
   InvalidCredentialsError,
   UserCreationError,
   UserNotFoundError,
 } from '@typescript-exercise/backend/data-access/auth/auth.errors';
-import { SignInRequestDto, SignUpRequestDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
+import { LoginRequestDto, RegisterRequestDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
 import { RecipeUserId } from 'supertokens-node';
+import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(@OgmaLogger(AuthService) private readonly logger: OgmaService, private readonly userRepository: UserRepository) {}
 
-  async signUp(req: Request, res: Response, dto: SignUpRequestDto) {
+  async register(req: Request, res: Response, dto: RegisterRequestDto) {
+    this.logger.info(`Creating user with email ${dto.email} in the supertokens DB...`);
     const signUpResponse = await EmailPassword.signUp('public', dto.email, dto.password);
 
     if (signUpResponse.status === 'EMAIL_ALREADY_EXISTS_ERROR') {
+      this.logger.error(AuthErrorCode.EMAIL_EXISTS);
       throw new EmailExistsError({ email: dto.email });
     }
 
     if (signUpResponse.status === 'OK') {
       try {
+        this.logger.info(`Creating user with email ${dto.email} in the repository...`);
         const user = await this.userRepository.create({
           data: {
             supertokensId: signUpResponse.user.id,
@@ -38,17 +43,21 @@ export class AuthService {
 
         return user;
       } catch (error) {
+        this.logger.error(error);
         throw new UserCreationError(error, { email: dto.email });
       }
     }
 
+    this.logger.error(AuthErrorCode.USER_CREATION_FAILED);
     throw new UserCreationError(new Error('Unexpected signup response'));
   }
 
-  async signIn(req: Request, res: Response, dto: SignInRequestDto) {
+  async login(req: Request, res: Response, dto: LoginRequestDto) {
+    this.logger.info(`Signing in user with email ${dto.email}...`);
     const signInResponse = await EmailPassword.signIn('public', dto.email, dto.password);
 
     if (signInResponse.status === 'WRONG_CREDENTIALS_ERROR') {
+      this.logger.error(AuthErrorCode.INVALID_CREDENTIALS);
       throw new InvalidCredentialsError({ email: dto.email });
     }
 
@@ -56,6 +65,7 @@ export class AuthService {
       const user = await this.userRepository.findBySupertokensId(signInResponse.user.id);
 
       if (!user) {
+        this.logger.error(AuthErrorCode.USER_NOT_FOUND);
         throw new UserNotFoundError({
           supertokensId: signInResponse.user.id,
           email: dto.email,
@@ -67,6 +77,7 @@ export class AuthService {
       return user;
     }
 
+    this.logger.error(AuthErrorCode.INVALID_CREDENTIALS);
     throw new InvalidCredentialsError();
   }
 

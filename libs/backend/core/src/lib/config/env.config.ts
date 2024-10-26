@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EnvConfig } from './env.schema';
+import { LogLevel } from '@typescript-exercise/backend/data-access/common/enums/log-level.enum';
 
 @Injectable()
 export class EnvironmentConfigService {
@@ -54,7 +55,7 @@ export class EnvironmentConfigService {
     return this.configService.get('NODE_ENV')!;
   }
 
-  get logLevel(): string {
+  get logLevel(): keyof typeof LogLevel {
     return this.configService.get('LOG_LEVEL')!;
   }
 

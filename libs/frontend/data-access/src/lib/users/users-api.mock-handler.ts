@@ -18,7 +18,7 @@ export function usersMocks(): HttpHandler[] {
       })
     ),
     http.post<never, UserLoginDto, null>(
-      `${API_URL}/${UsersApiRoutes.postSignIn()}`,
+      `${API_URL}/${UsersApiRoutes.postLogin()}`,
       mock.resolve(() => {
         // For mock testing scenarios, this will always come as 200 ok
         // Surely, it can be configured for various scenarios, but currently out of scope for this assignment

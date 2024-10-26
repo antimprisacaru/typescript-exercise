@@ -1,4 +1,4 @@
-import { AppError } from '@typescript-exercise/backend/core/errors/base.error';
+import { AppError } from '../common/errors/base.error';
 
 export enum AuthErrorCode {
   INVALID_CREDENTIALS = 'AUTH/INVALID_CREDENTIALS',

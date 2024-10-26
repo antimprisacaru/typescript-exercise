@@ -1,6 +1,6 @@
 export const UsersApiRoutes = {
   getCurrentUser: () => `auth/me`,
-  postSignIn: () => 'auth/signin',
-  postSignUp: () => 'auth/signup',
+  postLogin: () => 'auth/login',
+  postRegister: () => 'auth/register',
   postLogout: () => 'auth/logout',
 } as const;

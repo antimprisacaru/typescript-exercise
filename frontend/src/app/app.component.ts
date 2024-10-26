@@ -1,10 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  template: '<router-outlet />',
+  template: `
+    <p-toast />
+    <router-outlet />
+  `,
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastModule],
+  providers: [MessageService],
 })
 export class AppComponent {}

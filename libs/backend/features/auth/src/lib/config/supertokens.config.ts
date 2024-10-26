@@ -3,7 +3,7 @@ import { TypeInput } from 'supertokens-node/types';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
 import Session from 'supertokens-node/recipe/session';
 import Dashboard from 'supertokens-node/recipe/dashboard';
-import { EnvironmentConfigService } from './env.config';
+import { EnvironmentConfigService } from '@typescript-exercise/backend/core/config/env.config';
 
 @Injectable()
 export class SupertokensConfig {
