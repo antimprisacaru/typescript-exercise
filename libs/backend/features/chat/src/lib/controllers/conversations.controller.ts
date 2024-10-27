@@ -34,8 +34,8 @@ export class ConversationsController {
   })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 404, description: 'Conversation not found' })
-  @Get(':id')
-  async getById(@GetSession() session: SessionContainer, @Param(':conversationId') conversationId: string): Promise<ConversationDto> {
+  @Get(':conversationId')
+  async getById(@GetSession() session: SessionContainer, @Param('conversationId') conversationId: string): Promise<ConversationDto> {
     const user = await this.userDecoderService.decode(session);
     return this.conversationsService.getConversationById(user.id, conversationId).then((result) => new ConversationDto(result));
   }

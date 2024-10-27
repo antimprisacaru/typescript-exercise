@@ -8,7 +8,9 @@ export class MessageRepository {
   getMessagesByConversationId(conversationId: string) {
     return this.prisma.message.findMany({
       where: {
-        conversationId,
+        conversation: {
+          id: conversationId,
+        },
       },
       select: {
         id: true,
@@ -26,7 +28,7 @@ export class MessageRepository {
         },
       },
       orderBy: {
-        createdAt: 'desc',
+        createdAt: 'asc',
       },
     });
   }

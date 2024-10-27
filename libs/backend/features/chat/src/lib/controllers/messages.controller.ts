@@ -18,7 +18,7 @@ export class MessagesController {
   @ApiResponse({ status: HttpStatus.OK, type: [MessageDto] })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  async getAll(@Param(':conversationId') conversationId: string): Promise<MessageDto[]> {
+  async getAll(@Param('conversationId') conversationId: string): Promise<MessageDto[]> {
     // TODO: check user perms on this conversation
     return this.messagesService.getMessagesByConversationId(conversationId).then((result) => result.map((i) => new MessageDto(i)));
   }

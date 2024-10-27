@@ -38,7 +38,6 @@
     "@ogma/nestjs-module": "^5.2.1",
     "@ogma/platform-express": "^5.0.1",
     "@prisma/client": "^5.21.1",
-    "@supabase/supabase-js": "^2.45.6",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",

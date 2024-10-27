@@ -1,81 +1,63 @@
-## Overview of the Recruitment Exercise
+# Overview of the typescript exercise
 
-This is a dummy project, which is used to demonstrate knowledge of node and Angular as well as development in general. It serves as an example with some bad practices included.
+## Infrastructure
+- Backend: has been converted into NestJS app using Prisma and Supertokens Identity Provider
+- Frontend: Angular app with signal-based state management solution
+- Docker: containers for DB and Supertokens
 
-### Technologies:
+## Architecture
 
-- Backend: Node.js
-- Frontend: Angular
-- API: REST with an openapi.yaml file
+I've chosen to follow a Domain Driven Design architecture using NX to split code into libraries for both apps.
+Thus, we have the data-access library that contains DTOs, api services and mocks for the UI.
+On the backend side we also keep DTOs, errors and various utils.
 
-**Duration: 5-8 hours**
+Core libraries contain common functionalities such as guards, providers, decorators, middleware, etc.
 
-## Exercise Structure
+Then, rest of our code is in feature libraries, with two parts, one being auth and one being chat (where we group messages and conversations).
 
-### Repository Structure:
+The dependency tree is as follows: data-access may depend on nothing, core only on data-access and features on either of prior.
 
-`/backend` - Should contain all backend-related files.
+## UI Improvements
 
-`/frontend` - Contains all frontend-related files.
+Made the app zoneless in order to fully optimize the change detection cycles. With that, we use a combination of signals and RxJs in order to achieve seamless state management.
 
-`/docs` - Contains the openapi.yaml file and any additional documentation.
+I did not opt to integrate any third party state management solutions because the app is still small. If I did, I would've likely chose NgRx Signal Store due to its lightweight nature and extensibility. 
 
-#### Backend (/backend):
+The data flow within streams has been described via comments in login component. We use a combination of operators, ranging from startWith for the initial state, map for the success case and catchError for the error case.
 
-index.ts - Should contain main server file using Node.js.
+Furthermore, I've added msw (mock service worker) in order to have some mocks while developing on the UI without backend.
 
-#### Frontend (/frontend):
+## Backend
 
-app.component.ts - Main application file for Angular.
+Here, I've opted for NestJs because of the many feature it brings. I've also integrated Supertokens as an IDP because it can be self hosted and allows for plenty customizability.
+For instance, it can be integrated with major cloud providers and offers a way to architect your application without exposing yourself to vendor lock-in.
 
-##### API Definition (/docs):
+I've chosen Prisma because of its streamlining capabilities and powerful, type-safe codegen.
+In order to validate the DTOs, I've used Zod because of its powerful type inference and customizability.
 
-openapi.yaml
+Finally, I've added a websockets implementation in order to have real time updates for when data changes.
 
-## Tasks:
+## OpenAPI
+Swagger file is automatically generated and available at localhost:3000/swagger (there's also a link in the console on booting up the server).
 
-### Backend:
+## How to run it
 
-- [ ] Implement the backend architecture from scratch, which will support the Angular application's API calls.
-- [ ] Implement error handling.
-- [ ] Implement the plugin system for extensibility (Chatbot).
-- [ ] Add authentication for message sending.
+I like to use pnpm because it's faster, so I adjusted the project. You'll need to install it globally, as well as docker and dotenv-cli for the scripts.
 
-### Frontend:
+Steps:
 
-- [ ] Optimize data bindings and state management.
-- [ ] Improve the user interface responsiveness.
-- [ ] Implement a feature to display message status (sent, received).
-- [ ] Add seamless communication with the backend application.
-- [ ] Create a login form to allow users to log in and send messages.
+1. Run `pnpm install` in root.
+2. Run `pnpm exec serve:docker` for the containers. 
+3. Run `pnpm exec serve:backend`
+4. Run `pnpm exec serve:frontend`
 
-### API:
+The solution has an automatic migration run for the database, as well as a seed mechanism on the backend on boot.
+There will be 20 users generated with credentials "testuser1@gmail.com" (until "testuser20@gmail.com") and password `Password1!`.
 
-- [ ] Review and if necessary correct RESTful API practices.
-- [ ] Ensure best practices in the API definition.
 
-## General instructions
+## Recommendations
 
-- Make sure to follow best practices.
-- Pay attention to the code quality as well as software architecture. We value maintainability and readability.
-- We recommend documenting your changes and the reasoning behind them.
-- Git history is important. Make sure to commit your changes as you progress.
-- Feel free to ask questions if you have any doubts.
-- We are looking for a clean, well-structured solution that demonstrates your understanding of the technologies used.
+If I had more time, I would've also done a proper testing part. MSW is a specific choice for this in order to be able to run E2E's more seamlessly.
 
-## Deliverables
-
-- [ ] send in files with your comments by (one of)
-  - Inline-Code-Comments and send us the files
-  - drop the files anywhere and send us the link
-  - upload the code to your own Repository (Avoid forking the repository and creating a PR, as this would make your solution visible to others)
-- [ ] A brief report summarizing the changes you made, why, and any additional recommendations if they had more time.
-
-## Run instructions
-
-- Backend: `cd backend && npm install && npm run build && npm run start`
-- Frontend: `cd frontend && npm install && npm run serve`
-- API: `openapi.yaml` file contains the API definition.
-- Access the frontend at `http://localhost:4200`.
-- Access the backend at `http://localhost:3000`.
-- Note: The project is set up to run on localhost by default.
+Apart from this, I would've further finessed the UX, error handling and so on. Currently, the UI isn't that reactive, as you need to refresh the conversation to see changes.
+I would've liked to also make the conversations react to this, showing the last message after updating.
