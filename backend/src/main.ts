@@ -22,8 +22,9 @@ async function bootstrap() {
   // CORS setup
   app.enableCors({
     origin: ['http://localhost:4200'],
-    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    allowedHeaders: ['content-type', 'authorization', 'front-token', ...supertokens.getAllCORSHeaders()],
     credentials: true,
+    preflightContinue: false,
   });
 
   // Swagger setup

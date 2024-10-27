@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "MessageStatus" AS ENUM ('SENT', 'DELIVERED', 'READ');
+CREATE TYPE "MessageStatus" AS ENUM ('SENT', 'RECEIVED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -20,8 +20,6 @@ CREATE TABLE "Conversation" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "lastMessage" TEXT,
-    "lastTimestamp" TIMESTAMP(3),
 
     CONSTRAINT "Conversation_pkey" PRIMARY KEY ("id")
 );
@@ -31,9 +29,10 @@ CREATE TABLE "Message" (
     "id" TEXT NOT NULL,
     "text" TEXT NOT NULL,
     "status" "MessageStatus" NOT NULL,
-    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "conversationId" TEXT NOT NULL,
     "senderId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
 );

@@ -5,6 +5,7 @@ import { AppError } from '@typescript-exercise/backend/data-access/common/errors
 import { ZodError } from 'zod';
 import { EnvironmentConfigService } from '../config/env.config';
 import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
+import { omit } from 'lodash';
 
 interface ErrorResponse {
   code: string;
@@ -34,7 +35,7 @@ export class GlobalErrorFilter implements ExceptionFilter {
     // Log error details
     this.logError(error, errorResponse);
 
-    httpAdapter.reply(response, errorResponse, errorResponse.statusCode);
+    httpAdapter.reply(response, this.stripResponse(errorResponse), errorResponse.statusCode);
   }
 
   private createErrorResponse<T extends { url: string }>(error: unknown, request: T): ErrorResponse {
@@ -116,5 +117,9 @@ export class GlobalErrorFilter implements ExceptionFilter {
     } else {
       this.logger.warn(errorResponse.message, logContext);
     }
+  }
+
+  private stripResponse(error: ErrorResponse): Omit<ErrorResponse, 'metadata'> {
+    return omit(error, 'metadata');
   }
 }

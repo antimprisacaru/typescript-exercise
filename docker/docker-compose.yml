@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -22,12 +20,30 @@ services:
     networks:
       - chat-network
 
+  migrate:
+    build:
+      context: ..
+      dockerfile: docker/migrate.Dockerfile
+    container_name: chat-migrate
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-supertokens}
+    volumes:
+      - ../libs:/app/libs
+      - prisma_migrations:/app/libs/backend/data-access/src/lib/prisma/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - chat-network
+
   supertokens:
     image: registry.supertokens.io/supertokens/supertokens-postgresql
     container_name: chat-supertokens
     depends_on:
       postgres:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     environment:
       POSTGRESQL_CONNECTION_URI: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-supertokens}
       POSTGRESQL_TABLE_NAMES_PREFIX: ""
@@ -55,4 +71,6 @@ networks:
 
 volumes:
   postgres_data:
+    driver: local
+  prisma_migrations:
     driver: local

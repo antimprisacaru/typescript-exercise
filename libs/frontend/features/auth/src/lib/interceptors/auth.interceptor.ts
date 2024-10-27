@@ -25,7 +25,9 @@ const extractAndSaveTokens = (response: HttpResponse<unknown>): void => {
 };
 
 const addTokensToRequest = (request: HttpRequest<unknown>): HttpRequest<unknown> => {
-  if (request.url.includes('login')) {
+  const isPreflight = request.headers.has('Access-Control-Request-Method');
+
+  if (request.url.includes('login') || isPreflight) {
     return request;
   }
 

@@ -7,12 +7,13 @@ import { DataAccessModule } from '@typescript-exercise/backend/data-access/data-
 import { OgmaModule } from '@ogma/nestjs-module';
 import { SupertokensService } from './services/supertokens.service';
 import { SupertokensConfig } from './config/supertokens.config';
+import { CoreModule } from '@typescript-exercise/backend/core/core.module';
 
 @Module({})
 export class AuthModule {
   static forRoot(): DynamicModule {
     return {
-      imports: [ConfigModule, DataAccessModule, OgmaModule.forFeatures([AuthService.name])],
+      imports: [ConfigModule, DataAccessModule, CoreModule, OgmaModule.forFeatures([AuthService.name])],
       controllers: [AuthController],
       providers: [SupertokensConfig, SupertokensService, AuthService],
       module: AuthModule,

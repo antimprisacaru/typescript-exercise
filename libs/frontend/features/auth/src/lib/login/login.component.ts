@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -117,7 +117,7 @@ export class LoginComponent {
           startWith({ loading: true }),
           // If it errors, our state will then show error true
           handleApiError<UserErrorMap>({
-            UNKNOWN_ERROR: (error) => ({ loading: false, error: error.code }),
+            UNKNOWN_ERROR: (error) => ({ loading: false, error }),
           })
         )
       ),
@@ -128,8 +128,4 @@ export class LoginComponent {
     // Thus, undefined values will not appear (hence requireSync is typed without undefined)
     { requireSync: true }
   );
-
-  constructor() {
-    effect(() => console.log(this.loginState()));
-  }
 }

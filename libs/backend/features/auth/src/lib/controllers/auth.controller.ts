@@ -1,19 +1,19 @@
-import { Body, Controller, Get, HttpStatus, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@typescript-exercise/backend/core/guards/auth.guard';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
-import { AuthResponseDto, LoginRequestDto, RegisterRequestDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
+import { LoginRequestDto, RegisterRequestDto, UserDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
 import { SessionContainer } from 'supertokens-node/recipe/session';
-import { UserRepository } from '@typescript-exercise/backend/data-access/user/user.repository';
 import { GetSession } from '@typescript-exercise/backend/core/decorators/session.decorator';
 import { ValidationPipe } from '@typescript-exercise/backend/core/pipes/validation.pipe';
 import { signInSchema, signUpSchema } from '@typescript-exercise/backend/data-access/auth/auth.schema';
 import { AuthErrorCode } from '@typescript-exercise/backend/data-access/auth/auth.errors';
 import { ApiBadRequestResponse, ApiBody, ApiConflictResponse, ApiOperation, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { UserDecoderService } from '@typescript-exercise/backend/core/services/user-decoder.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, protected readonly userRepository: UserRepository) {}
+  constructor(private readonly authService: AuthService, private readonly userDecoderService: UserDecoderService) {}
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
@@ -21,7 +21,6 @@ export class AuthController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'User successfully registered',
-    type: AuthResponseDto,
   })
   @ApiBadRequestResponse({
     description: 'Invalid input - check response for detailed validation errors',
@@ -31,11 +30,9 @@ export class AuthController {
   })
   async register(
     @Body(new ValidationPipe(signUpSchema, AuthErrorCode.INVALID_INPUT))
-    dto: RegisterRequestDto,
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
-  ): Promise<AuthResponseDto> {
-    return this.authService.register(req, res, dto);
+    dto: RegisterRequestDto
+  ): Promise<void> {
+    return this.authService.register(dto);
   }
 
   @Post('login')
@@ -44,7 +41,7 @@ export class AuthController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Successfully authenticated',
-    type: AuthResponseDto,
+    type: UserDto,
   })
   @ApiBadRequestResponse({
     description: 'Invalid input - check response for detailed validation errors',
@@ -57,24 +54,19 @@ export class AuthController {
     dto: LoginRequestDto,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response
-  ): Promise<AuthResponseDto> {
-    return this.authService.login(req, res, dto);
+  ): Promise<UserDto> {
+    return this.authService.login(req, res, dto).then((result) => new UserDto(result));
   }
 
   @Post('logout')
   @UseGuards(AuthGuard)
-  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    await this.authService.logout(req, res);
-    return { message: 'Logged out successfully' };
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<void> {
+    return await this.authService.logout(req, res);
   }
 
   @Get('me')
   @UseGuards(AuthGuard)
-  async me(@GetSession() session: SessionContainer) {
-    const user = await this.userRepository.findBySupertokensId(session.getUserId());
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-    return user;
+  async me(@GetSession() session: SessionContainer): Promise<UserDto> {
+    return await this.userDecoderService.decode(session).then((result) => new UserDto(result));
   }
 }

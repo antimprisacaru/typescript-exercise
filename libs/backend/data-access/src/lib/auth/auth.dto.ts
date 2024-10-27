@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { User } from '@prisma/client';
 
 export class RegisterRequestDto {
   @ApiProperty({
@@ -45,7 +46,7 @@ export class LoginRequestDto {
   password!: string;
 }
 
-export class AuthResponseDto {
+export class UserDto {
   @ApiProperty({
     example: '5f7d3e2b-1f9c-4e6a-8a0b-6d1f3c7d8e9a',
     description: 'User unique identifier',
@@ -75,4 +76,12 @@ export class AuthResponseDto {
     description: 'User avatar URL',
   })
   avatarUrl?: string | null;
+
+  constructor(input: Pick<User, 'id' | 'email' | 'firstName' | 'lastName' | 'avatarUrl'>) {
+    this.id = input.id;
+    this.email = input.email;
+    this.firstName = input.firstName;
+    this.lastName = input.lastName;
+    this.avatarUrl = input.avatarUrl;
+  }
 }

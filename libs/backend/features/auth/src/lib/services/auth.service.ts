@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from '@typescript-exercise/backend/data-access/user/user.repository';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
 import Session, { SessionContainer } from 'supertokens-node/recipe/session';
@@ -13,12 +13,13 @@ import {
 import { LoginRequestDto, RegisterRequestDto } from '@typescript-exercise/backend/data-access/auth/auth.dto';
 import { RecipeUserId } from 'supertokens-node';
 import { OgmaLogger, OgmaService } from '@ogma/nestjs-module';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
   constructor(@OgmaLogger(AuthService) private readonly logger: OgmaService, private readonly userRepository: UserRepository) {}
 
-  async register(req: Request, res: Response, dto: RegisterRequestDto) {
+  async register(dto: RegisterRequestDto): Promise<void> {
     this.logger.info(`Creating user with email ${dto.email} in the supertokens DB...`);
     const signUpResponse = await EmailPassword.signUp('public', dto.email, dto.password);
 
@@ -30,7 +31,7 @@ export class AuthService {
     if (signUpResponse.status === 'OK') {
       try {
         this.logger.info(`Creating user with email ${dto.email} in the repository...`);
-        const user = await this.userRepository.create({
+        await this.userRepository.create({
           data: {
             supertokensId: signUpResponse.user.id,
             email: dto.email,
@@ -39,9 +40,8 @@ export class AuthService {
           },
         });
 
-        await Session.createNewSession(req, res, 'public', new RecipeUserId(signUpResponse.user.id));
-
-        return user;
+        this.logger.info(`User successfully created.`);
+        return;
       } catch (error) {
         this.logger.error(error);
         throw new UserCreationError(error, { email: dto.email });
@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   async login(req: Request, res: Response, dto: LoginRequestDto) {
-    this.logger.info(`Signing in user with email ${dto.email}...`);
     const signInResponse = await EmailPassword.signIn('public', dto.email, dto.password);
 
     if (signInResponse.status === 'WRONG_CREDENTIALS_ERROR') {
@@ -86,6 +85,14 @@ export class AuthService {
       sessionRequired: true,
       antiCsrfCheck: true,
     });
+  }
+
+  async findBySupertokensId(id: string): Promise<User> {
+    const user = await this.userRepository.findBySupertokensId(id);
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    return user;
   }
 
   async logout(req: Request, res: Response): Promise<void> {

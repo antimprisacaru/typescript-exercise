@@ -3,13 +3,13 @@ import { UserModel } from '@typescript-exercise/frontend/core/models/user.model'
 
 export class ConversationModel {
   id: string;
-  participants: UserModel[];
+  participant: UserModel;
   lastMessage: string;
   lastTimestamp: Date;
 
-  constructor({ id, participants, lastMessage, lastTimestamp }: ConversationDto) {
+  constructor({ id, participant, lastMessage, lastTimestamp }: ConversationDto) {
     this.id = id;
-    this.participants = participants.map((p) => new UserModel(p));
+    this.participant = new UserModel(participant);
     this.lastMessage = lastMessage;
     this.lastTimestamp = new Date(lastTimestamp);
   }

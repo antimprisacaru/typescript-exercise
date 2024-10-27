@@ -31,11 +31,7 @@ import { DividerModule } from 'primeng/divider';
     <div class="flex h-screen">
       <!-- Sidebar -->
       @if (!responsive.isMobile() || (responsive.isMobile() && showSidebar())) {
-      <div
-        [class.w-96]="!responsive.isMobile()"
-        [class.w-full]="responsive.isMobile()"
-        class="border-r border-gray-200 flex flex-col"
-      >
+      <div [class.w-96]="!responsive.isMobile()" [class.w-full]="responsive.isMobile()" class="border-r border-gray-200 flex flex-col">
         <div class="p-4 border-b">
           <h1 class="text-2xl font-bold">Messages</h1>
         </div>
@@ -48,10 +44,10 @@ import { DividerModule } from 'primeng/divider';
             routerLinkActive="bg-gray-100"
             (click)="onConversationSelect()"
           >
-            <p-avatar [image]="conversation.participants[0].avatarUrl" size="large" shape="circle">
-              @if (conversation.participants[0].avatarUrl) {
+            <p-avatar [image]="conversation.participant.avatarUrl" size="large" shape="circle">
+              @if (conversation.participant.avatarUrl) {
               <ng-template pTemplate="error">
-                {{ conversation.participants[0].firstName[0] }}
+                {{ conversation.participant.firstName[0] }}
               </ng-template>
               }
             </p-avatar>
@@ -59,8 +55,8 @@ import { DividerModule } from 'primeng/divider';
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-baseline">
                 <h3 class="font-semibold truncate">
-                  {{ conversation.participants[0].firstName }}
-                  {{ conversation.participants[0].lastName }}
+                  {{ conversation.participant.firstName }}
+                  {{ conversation.participant.lastName }}
                 </h3>
                 <span class="text-sm text-gray-500">{{ conversation.lastTimestamp | date : 'h:mm a' }}</span>
               </div>

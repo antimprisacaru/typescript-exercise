@@ -10,9 +10,9 @@ type ConversationMock = ConversationDto & { messages: MessageDto[] };
 export const conversations: ConversationMock[] = Array.from({ length: 30 }).map(() => {
   const base: Omit<ConversationDto, 'lastMessage' | 'lastTimestamp'> = {
     id: randUuid(),
-    participants: [rand(users), DEFAULT_USER],
+    participant: rand(users),
   };
-  const messages = Array.from({ length: 30 }).map(() => generateMessage(base.participants));
+  const messages = Array.from({ length: 30 }).map(() => generateMessage(base.participant));
   const lastMessage = maxBy(messages, (m) => new Date(m.timestamp))!;
 
   return {
@@ -23,12 +23,12 @@ export const conversations: ConversationMock[] = Array.from({ length: 30 }).map(
   } satisfies ConversationMock;
 });
 
-function generateMessage(participants: UserDto[]): MessageDto {
+function generateMessage(participant: UserDto): MessageDto {
   return {
     id: randUuid(),
     text: randSentence(),
     status: rand(Object.values(MessageStatus)),
-    sender: rand(participants),
+    sender: participant,
     timestamp: randPastDate().toISOString(),
   };
 }
@@ -53,7 +53,7 @@ export function addMessage(conversationId: string, input: MessageInputDto): Mess
     id: randUuid(),
     timestamp: new Date().toISOString(),
     status: rand(Object.values(MessageStatus)),
-    sender: rand(conversations[conversationIdx].participants),
+    sender: rand([conversations[conversationIdx].participant, DEFAULT_USER]),
   };
   conversations[conversationIdx].messages.push(newMessage);
   conversations[conversationIdx].lastMessage = newMessage.text;

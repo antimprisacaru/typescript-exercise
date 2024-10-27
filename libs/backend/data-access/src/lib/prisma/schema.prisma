@@ -26,23 +26,21 @@ model Conversation {
   messages      Message[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  lastMessage   String?
-  lastTimestamp DateTime?
 }
 
 model Message {
   id             String        @id @default(uuid())
   text           String
   status         MessageStatus
-  timestamp      DateTime      @default(now())
   conversationId String
   senderId       String
   conversation   Conversation  @relation(fields: [conversationId], references: [id])
   sender         User          @relation("SentMessages", fields: [senderId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 enum MessageStatus {
   SENT
-  DELIVERED
-  READ
+  RECEIVED
 }
