@@ -2,6 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { UserService } from '@typescript-exercise/frontend/core/services/user.service';
 import { MessageModel } from '../../models/message.model';
+import { MessageStatus } from '@typescript-exercise/frontend/data-access/messages/messages-api.interfaces';
 
 @Component({
   selector: 'app-message',
@@ -23,11 +24,13 @@ import { MessageModel } from '../../models/message.model';
       >
         <p class="font-semibold text-xs mb-1">{{ message.sender.firstName }} {{ message.sender.lastName }}</p>
         <p>{{ message.text }}</p>
-        <div class="text-xs text-right mt-1">
+        <div class="text-xs text-right mt-1 flex items-center justify-end gap-1">
           {{ message.timestamp | date : 'short' }}
-          @if (message.sender.id === user.id) {
-          <i class="pi ml-1"></i>
-          }
+          @if (message.sender.id === user.id) { @if (message.status === MessageStatus.Received) {
+          <i class="pi pi-check-circle"></i>
+          } @else if (message.status === MessageStatus.Sent) {
+          <i class="pi pi-check"></i>
+          } }
         </div>
       </div>
     </div>
@@ -39,4 +42,5 @@ export class MessageComponent {
 
   protected readonly currentUser = this.userService.currentUser;
   public readonly messageInput = input.required<MessageModel>();
+  protected readonly MessageStatus = MessageStatus;
 }

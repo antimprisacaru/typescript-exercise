@@ -8,6 +8,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiErrorInterceptor } from '@typescript-exercise/frontend/core/error/api-error.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptor } from '@typescript-exercise/frontend/features/auth';
+import { provideWSUrl } from '@typescript-exercise/frontend/core/providers/ws-url.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideRouter(appRoutes),
     provideApiUrl(),
+    provideWSUrl(),
     provideAppInitializer(),
   ],
 };

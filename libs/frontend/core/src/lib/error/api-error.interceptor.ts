@@ -1,6 +1,6 @@
 import { catchError, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
-import { ApiError, ErrorMap } from '@typescript-exercise/frontend/data-access/error/api.error';
+import { ApiError, ErrorMap } from '@typescript-exercise/frontend/data-access/common/error/api.error';
 
 interface ErrorResponse {
   code: string;

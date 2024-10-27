@@ -1,10 +1,10 @@
 import { http, HttpHandler, HttpResponse } from 'msw';
 import { inject } from '@angular/core';
-import { API_URL_TOKEN } from '../tokens/api-url.token';
+import { API_URL_TOKEN } from '@typescript-exercise/frontend/data-access/common/tokens/api-url.token';
 import { UsersApiRoutes } from './users-api.routes';
 import { UserDto, UserLoginDto } from './users-api.interfaces';
 import { DEFAULT_USER } from './users-data.mock';
-import { MockService } from '../mock/mock.service';
+import { MockService } from '@typescript-exercise/frontend/data-access/common/mock/mock.service';
 
 export function usersMocks(): HttpHandler[] {
   const API_URL = inject(API_URL_TOKEN);

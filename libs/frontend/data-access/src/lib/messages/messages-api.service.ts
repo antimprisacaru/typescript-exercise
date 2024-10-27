@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MessageDto, MessageInputDto } from './messages-api.interfaces';
 import { MessagesApiRoutes } from './messages-api.routes';
-import { API_URL_TOKEN } from '../tokens/api-url.token';
+import { API_URL_TOKEN } from '@typescript-exercise/frontend/data-access/common/tokens/api-url.token';
 
 @Injectable({ providedIn: 'root' })
 export class MessagesApiService {

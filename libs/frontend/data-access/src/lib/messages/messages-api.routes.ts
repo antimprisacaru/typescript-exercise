@@ -1,4 +1,4 @@
 export const MessagesApiRoutes = {
-  getMessages: (conversationId?: string) => `messages/${conversationId ?? ':conversationId'}`,
-  putMessages: (conversationId?: string) => `messages/${conversationId ?? ':conversationId'}/send`,
+  getMessages: (conversationId?: string) => `conversations/${conversationId ?? ':conversationId'}/messages`,
+  putMessages: (conversationId?: string) => `conversations/${conversationId ?? ':conversationId'}/send`,
 } as const;

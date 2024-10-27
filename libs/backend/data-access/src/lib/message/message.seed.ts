@@ -14,7 +14,7 @@ export class MessageSeed implements BaseSeed {
     });
 
     for (const conversation of conversations) {
-      const numberOfMessages = randNumber({ min: 10, max: 100 });
+      const numberOfMessages = randNumber({ min: 5, max: 20 });
       let lastDate = randPastDate();
       const now = new Date();
 
@@ -36,7 +36,6 @@ export class MessageSeed implements BaseSeed {
           this.logger.debug(`Created message ${message.id} in conversation ${conversation.id}`);
         } catch (error) {
           this.logger.error(`Failed to create message`, JSON.stringify(error));
-          throw error;
         }
       }
 

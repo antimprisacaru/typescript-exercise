@@ -7,6 +7,7 @@ import { GlobalErrorFilter } from '@typescript-exercise/backend/core/filters/err
 import { EnvironmentConfigService } from '@typescript-exercise/backend/core/config/env.config';
 import { OgmaService } from '@ogma/nestjs-module';
 import { SupertokensExceptionFilter } from '@typescript-exercise/backend/core/filters/supertokens.filter';
+import { SocketIoAdapter } from '@typescript-exercise/backend/core/adapters/socket.adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,9 @@ async function bootstrap() {
     credentials: true,
     preflightContinue: false,
   });
+
+  // WebSocket CORS
+  app.useWebSocketAdapter(new SocketIoAdapter(app));
 
   // Swagger setup
   if (configService.enableSwagger) {

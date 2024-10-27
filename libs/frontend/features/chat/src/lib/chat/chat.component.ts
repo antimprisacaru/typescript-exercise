@@ -31,29 +31,14 @@ import { filter, map, switchMap } from 'rxjs';
     DividerModule,
   ],
   template: `
-    <div class="flex h-[calc(100vh-64px)]">
+    <div class="flex h-[calc(100dvh-64px)] overflow-hidden">
       <!-- Conversations List -->
       <div
         [class.w-96]="!responsive.isMobile()"
         [class.w-full]="responsive.isMobile()"
         [class.hidden]="responsive.isMobile() && conversationId()"
-        class="border-r border-gray-200 flex flex-col"
+        class="border-r border-gray-200 flex flex-col overflow-hidden"
       >
-        <!-- Mobile-only header with back button when in chat -->
-        @if (responsive.isMobile() && conversationId()) {
-        <div class="p-4 border-b flex items-center gap-2">
-          <button class="p-2 rounded-lg hover:bg-gray-100" routerLink="..">
-            <i class="pi pi-arrow-left text-xl"></i>
-          </button>
-          <span class="font-semibold">Back to conversations</span>
-        </div>
-        }
-
-        <!-- Conversations list header -->
-        <div class="p-4 border-b">
-          <h1 class="text-2xl font-bold">Messages</h1>
-        </div>
-
         <!-- Conversations list -->
         <div class="flex-1 overflow-y-auto">
           @for (conversation of conversations(); track conversation.id) {
@@ -94,10 +79,10 @@ import { filter, map, switchMap } from 'rxjs';
       </div>
 
       <!-- Messages Area -->
-      <div class="flex-1" [class.hidden]="responsive.isMobile() && !conversationId()">
+      <div class="flex-1 flex flex-col overflow-hidden pb-8" [class.hidden]="responsive.isMobile() && !conversationId()">
         <!-- Mobile chat header -->
         @if (responsive.isMobile() && conversationId()) {
-        <div class="border-b border-gray-200 p-4 flex items-center gap-2">
+        <div class="border-b border-gray-200 p-4 flex items-center gap-2 flex-shrink-0">
           <button class="p-2 rounded-lg hover:bg-gray-100" routerLink="..">
             <i class="pi pi-arrow-left text-xl"></i>
           </button>

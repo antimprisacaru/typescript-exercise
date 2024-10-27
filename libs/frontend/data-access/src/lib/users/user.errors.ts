@@ -1,4 +1,4 @@
-import { createErrorMap, UNKNOWN_ERROR } from '../error/api.error';
+import { createErrorMap, UNKNOWN_ERROR } from '@typescript-exercise/frontend/data-access/common/error/api.error';
 
 export const USER_ERRORS = createErrorMap({
   INVALID_CREDENTIALS: 'AUTH/INVALID_CREDENTIALS',

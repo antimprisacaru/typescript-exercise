@@ -29,7 +29,6 @@ export class ConversationSeed implements BaseSeed {
         this.logger.info(`Created conversation ${conversation.id} between users ${user1.id} and ${user2.id}`);
       } catch (error) {
         this.logger.error(`Failed to create conversation between users ${user1.id} and ${user2.id}`, JSON.stringify(error));
-        throw error;
       }
     }
   }

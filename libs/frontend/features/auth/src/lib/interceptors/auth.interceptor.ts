@@ -1,11 +1,11 @@
 // auth.interceptor.ts
 import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-
-// Token storage keys
-const FRONT_TOKEN_KEY = 'front-token';
-const ACCESS_TOKEN_KEY = 'st-access-token';
-const REFRESH_TOKEN_KEY = 'st-refresh-token';
+import {
+  ACCESS_TOKEN_KEY,
+  FRONT_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+} from '@typescript-exercise/frontend/data-access/common/constants/auth.constants';
 
 // Helper functions
 const extractAndSaveTokens = (response: HttpResponse<unknown>): void => {

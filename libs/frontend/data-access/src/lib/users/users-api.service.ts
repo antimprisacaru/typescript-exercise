@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL_TOKEN } from '../tokens/api-url.token';
+import { API_URL_TOKEN } from '@typescript-exercise/frontend/data-access/common/tokens/api-url.token';
 import { Observable } from 'rxjs';
 import { UserDto, UserLoginDto, UserRegisterDto } from './users-api.interfaces';
 import { UsersApiRoutes } from './users-api.routes';

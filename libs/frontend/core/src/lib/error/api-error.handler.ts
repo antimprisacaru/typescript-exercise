@@ -1,4 +1,4 @@
-import { ApiError, ErrorMap } from '@typescript-exercise/frontend/data-access/error/api.error';
+import { ApiError, ErrorMap } from '@typescript-exercise/frontend/data-access/common/error/api.error';
 import { catchError, Observable, of, throwError } from 'rxjs';
 
 // Handler types

@@ -15,8 +15,4 @@ export class MessageModel {
     this.sender = new UserModel(sender);
     this.timestamp = new Date(timestamp);
   }
-
-  get empty() {
-    return this.text === '';
-  }
 }

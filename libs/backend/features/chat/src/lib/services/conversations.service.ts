@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ConversationRepository } from '@typescript-exercise/backend/data-access/conversations/conversation.repository';
 import { AggregatedConversationListItem } from '@typescript-exercise/backend/data-access/conversations/conversation.interfaces';
+import { MessageRepository } from '@typescript-exercise/backend/data-access/message/message.repository';
+import { ConversationAccessError } from '@typescript-exercise/backend/data-access/conversations/conversation.errors';
 
 @Injectable()
 export class ConversationsService {
-  constructor(private readonly conversationRepository: ConversationRepository) {}
+  constructor(private readonly conversationRepository: ConversationRepository, private readonly messageRepository: MessageRepository) {}
 
   async getAllConversations(userId: string): Promise<AggregatedConversationListItem[]> {
     const result = await this.conversationRepository.getAllConversations(userId);
@@ -26,5 +28,15 @@ export class ConversationsService {
       lastMessage: result.messages[0].text,
       lastTimestamp: result.messages[0].createdAt.toISOString(),
     };
+  }
+
+  async markMessagesAsDelivered(conversationId: string, userId: string): Promise<void> {
+    const hasAccess = await this.messageRepository.verifyConversationAccess(conversationId, userId);
+
+    if (!hasAccess) {
+      throw new ConversationAccessError();
+    }
+
+    await this.messageRepository.markConversationMessagesAsDelivered(conversationId, userId);
   }
 }

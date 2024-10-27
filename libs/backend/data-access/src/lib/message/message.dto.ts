@@ -48,3 +48,11 @@ export class MessageDto {
     this.timestamp = input.timestamp;
   }
 }
+
+export class MessageInputDto {
+  @ApiProperty({
+    example: 'bla',
+    description: 'Text content of message',
+  })
+  text!: string;
+}

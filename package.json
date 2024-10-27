@@ -32,6 +32,8 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/platform-socket.io": "^10.4.6",
+    "@nestjs/websockets": "^10.4.6",
     "@ngneat/falso": "^7.2.0",
     "@ogma/nestjs-module": "^5.2.1",
     "@ogma/platform-express": "^5.0.1",
@@ -50,6 +52,8 @@
     "primeng": "^17.18.11",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "supertokens-node": "^20.1.5",
     "zod": "^3.23.8"
   },

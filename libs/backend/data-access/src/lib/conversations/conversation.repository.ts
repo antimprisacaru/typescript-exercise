@@ -13,6 +13,9 @@ export class ConversationRepository {
             id: userId,
           },
         },
+        messages: {
+          some: {},
+        },
       },
       select: {
         id: true,
@@ -46,11 +49,6 @@ export class ConversationRepository {
     return this.prisma.conversation.findUniqueOrThrow({
       where: {
         id: conversationId,
-        participants: {
-          some: {
-            id: userId,
-          },
-        },
       },
       select: {
         id: true,
